@@ -1,0 +1,52 @@
+model:
+    type: "dr-spaam"
+    kwargs:
+        dropout: 0.5
+        num_pts: 56
+        alpha: 0.5
+        window_size: 11
+        # focal_loss_gamma: 0.0
+
+dataset:
+    augment_data: False
+    person_only: True
+
+    DROWHandle:
+        data_dir: "./../../data/DROWv2-data"
+        num_scans: 10
+        scan_stride: 1
+
+    cutout_kwargs:
+        fixed: False
+        centered: True
+        window_width: 1.0
+        window_depth: 0.5
+        num_cutout_pts: 56
+        padding_val: 29.99
+        area_mode: True
+
+dataloader:
+    batch_size: 8
+    num_workers: 8
+
+pipeline:
+    Trainer:
+        grad_norm_clip: -1.0
+        ckpt_interval: 5
+        eval_interval: 5
+        epoch: 40
+
+    Optim:
+        scheduler_kwargs:
+            epoch0: 0
+            epoch1: 40
+            lr0: 1.e-3
+            lr1: 1.e-6
+
+    Logger:
+        log_dir: "./logs/"
+        tag: "dr_spaam"
+        log_fname: "log.txt"
+        backup_list: []
+
+tag: ''

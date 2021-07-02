@@ -1,0 +1,50 @@
+dataset:
+    # JRDBHandle
+    data_dir: ./data/JRDB
+    radius_segment: 0.4
+    perturb: 0.1
+
+    # JRDBBoxRegressionDataset
+    train_with_val: True
+    is_3d: True
+    min_segment_size: 5
+    input_size: 256
+
+    augmentation_kwargs:
+        use_data_augmentation: True
+        rot_max: 0.25
+        dist_max: 0.3
+        dim_max: 0.2
+        random_drop: 0.25
+
+dataloader:
+    batch_size: 256
+    num_workers: 8
+
+model:
+    type: box_reg
+    input_dim: 4
+    target_dim: 5
+    dropout: 0.3
+
+pipeline:
+    Trainer:
+        grad_norm_clip: -1.0
+        ckpt_interval: 10
+        eval_interval: 5
+        epoch: 20
+
+    Optim:
+        scheduler_kwargs:
+            epoch0: 0
+            epoch1: 100
+            lr0: 1.e-3
+            lr1: 1.e-6
+
+    Logger:
+        result_dir: "./output_box_reg"
+        log_dir: "./output_box_reg/logs/"
+        tag: "box_reg"
+        log_fname: "log.txt"
+        backup_list: []
+

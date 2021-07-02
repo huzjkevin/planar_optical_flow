@@ -1,0 +1,38 @@
+tag: ""
+epochs: 200
+batch_size: 4
+grad_norm_clip: 0.0
+num_workers: 4
+num_scans: 5
+use_data_augumentation: False
+train_with_val: False
+focal_loss_gamma: 0.0
+pedestrian_only: False
+
+# Network type: "fc1d", "fc2d", "fc1d_fea", "fc2d_fea", "cutout", "cutout_gating" or "cutout_spatial"
+network: "cutout_spatial"
+
+similarity_kwargs:
+    alpha: 0.5
+    window_size: 7
+
+cutout_kwargs:
+    fixed: True
+    centered: True
+    window_width: 1.66
+    window_depth: 1.0
+    num_cutout_pts: 48
+    padding_val: 29.99
+
+polar_grid_kwargs:
+    min_range: 0.0
+    max_range: 30.0
+    range_bin_size: 0.1
+    tsdf_clip: 1.0
+    normalize: True
+
+vote_kwargs:
+    bin_size: 0.11691041834028301
+    blur_sigma: 0.7801193226779289
+    min_thresh: 0.0013299798109178708
+    vote_collect_radius: 0.1560556348793659
